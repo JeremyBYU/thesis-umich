@@ -864,7 +864,7 @@
  % Start the automatic table of contents features.
  \noindent ALGORITHM
  \begin{singlespace} %
-  \@starttoc{lal}\if@restonecol\twocolumn\fi %
+  \@starttoc{loa}\if@restonecol\twocolumn\fi %
  \end{singlespace} %
 }
 
