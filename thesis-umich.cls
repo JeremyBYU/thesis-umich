@@ -864,7 +864,7 @@
  % Start the automatic table of contents features.
  \noindent ALGORITHM
  \begin{singlespace} %
-  \@starttoc{loa}\if@restonecol\twocolumn\fi %
+  \@starttoc{lal}\if@restonecol\twocolumn\fi %
  \end{singlespace} %
 }
 
@@ -892,7 +892,7 @@
  \vspace{1ex} %
  % Start the automatic table of contents features.
  \begin{singlespace} %
-  \@starttoc{loa}\if@restonecol\twocolumn\fi %
+  \@starttoc{lap}\if@restonecol\twocolumn\fi %
  \end{singlespace} %
 }
 
@@ -904,12 +904,13 @@
  \renewcommand*{\thechapter}{\Alph{chapter}} %
  % Start over the chapter counter.
  \setcounter{chapter}{0} %
+ \setcounter{section}{0}
  % Add a pdf anchor.
  \phantomsection %
  % Add the page to the table of contents.
  \addcontentsline{toc}{chapter}{Appendices}
  % Stop adding sections to the table of contents.
- \addtocontents{toc}{\protect\setcounter{tocdepth}{1}} %
+ \addtocontents{toc}{\protect\setcounter{tocdepth}{2}} %
  % Header for appendices.
  \renewcommand{\@chapapp}{APPENDIX} %
  % Renew the chapter and section labels.
@@ -927,10 +928,11 @@
  % Add a bookmark manually.
  \pdfbookmark[0]{#1}{#2} %
  % Add to the list of appendices rather than toc.
- \addcontentsline{loa}{chapter}{\protect\numberline{\thechapter}#1} %
+ \addcontentsline{lap}{chapter}{\protect\numberline{\thechapter}#1} %
  % Save the chapter number.
  \chaptermark{#1} %
  % Add extra space to the lists of figures and tables and maps.
+ \addtocontents{lal}{\protect\addvspace{8pt}} %
  \addtocontents{lof}{\protect\addvspace{8pt}} %
  \addtocontents{lot}{\protect\addvspace{8pt}} %
  \addtocontents{lom}{\protect\addvspace{8pt}} %
