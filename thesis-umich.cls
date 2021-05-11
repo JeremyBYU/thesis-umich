@@ -66,6 +66,7 @@
 \newif\if@umich@report
 \newif\if@umich@listoffigures
 \newif\if@umich@listoftables
+\newif\if@umich@listofalgorithms
 \newif\if@umich@listofmaps
 \newif\if@umich@listofillustrations
 \newif\if@umich@listofappendices
@@ -85,6 +86,7 @@
 \@umich@thesistrue
 \@umich@listoffigurestrue
 \@umich@listoftablestrue
+\@umich@listofalgorithmstrue
 \@umich@copyrighttrue
 
 % This makes an option for bibliography backrefs.
@@ -650,6 +652,7 @@
 % Commands to show each of the lists
 \newcommand{\showlistoffigures}{\@umich@listoffigurestrue}
 \newcommand{\showlistoftables}{\@umich@listoftablestrue}
+\newcommand{\showlistofalgorithms}{\@umich@listofalgorithmstrue}
 \newcommand{\showlistofmaps}{\@umich@listofmapstrue}
 \newcommand{\showlistofillustrations}{\@umich@listofillustrationstrue}
 \newcommand{\showlistofappendices}{\@umich@listofappendicestrue}
@@ -660,6 +663,7 @@
 % Commands to hide each of the lists
 \newcommand{\hidelistoffigures}{\@umich@listoffiguresfalse}
 \newcommand{\hidelistoftables}{\@umich@listoftablesfalse}
+\newcommand{\hidelistofalgorithms}{\@umich@listofalgorithmsfalse}
 \newcommand{\hidelistofmaps}{\@umich@listofmapsfalse}
 \newcommand{\hidelistofillustrations}{\@umich@listofillustrationsfalse}
 \newcommand{\hidelistofappendices}{\@umich@listofappendicesfalse}
@@ -836,7 +840,33 @@
  \end{singlespace} %
 }
 
+%% ---- LIST OF ALGORITHMS ------------------------------------------------
+% This sets the formatting for the various entry types.
+\newcommand*{\l@algorithm}{\@dottedtocline{1}{0em}{2.5em}}
 
+% This sets the formatting of the list of figures page.
+\newcommand*{\listofalgorithmstemp}{%
+ % Move to new page.
+ \newpage %
+ % Add this page to the table of contents.
+ \phantomsection\addcontentsline{toc}{chapter}{List of Algorithms} %
+ % Use front page styling.
+ \frntpg %
+ % Larger upper margin for first page of table (thesis only)
+ \if@umich@thesis %
+  \begin{minipage}{0.8\textwidth} \vspace{1in} \end{minipage} \\ %
+ \fi %
+ % Add the title
+ \centerline{\large\bf LIST OF ALGORITHMS}
+ % Add some space after the title.
+ \vspace{2em} %
+ \ \\
+ % Start the automatic table of contents features.
+ \noindent ALGORITHM
+ \begin{singlespace} %
+  \@starttoc{loa}\if@restonecol\twocolumn\fi %
+ \end{singlespace} %
+}
 
 %% ---- LIST OF APPENDICES ---------------------------------------------
 % This sets the formatting for appendices in the list.
@@ -1253,6 +1283,8 @@
  \if@umich@listofillustrations\listofillustrations\fi %
  % Insert the list of appendices.
  \if@umich@listofappendices\listofappendices\fi %
+ % Insert the list of algorithms.
+\if@umich@listofalgorithms\listofalgorithmstemp\fi %
  % Insert the list of abbreviations.
  \if@umich@listofabbrevs\listofabbreviations\fi %
  % Insert the list of acronyms.
