@@ -428,7 +428,12 @@
     % Larger upper margin for first page of front matter
        % Heading
        \begin{center} \textbf{\uppercase{#3}} \end{center} %
-    }{}    % Insert the text.
+    }{
+      % Jeremy Castagno 06/22/21 - Rackham says acknowledgement must have not have italics
+      \centerline{\large\bf #3} %
+      \vspace{2ex} %
+      %  \begin{center}\textbf{#3}\end{center} %
+    }    % Insert the text.
     }
 
     #1 %
@@ -460,7 +465,8 @@
 % Command that holds the value text of the dedication
 \newcommand{\@dedication}{}
 % Command that sets the dedication style
-\newcommand{\@dedicationstyle}{\@frontpagestyle}
+% Jeremy Castagno 07/27/21 - Rackham says front matter (ack, ded, preface) must have not have italics, setting to bold non-italics sytle (4)
+\newcommand{\@dedicationstyle}{4}
 % Command that sets the width of the dedication text area
 \newcommand{\@dedication@width}{1}
 
@@ -488,7 +494,7 @@
  \phantomsection\addcontentsline{toc}{chapter}{Dedication}
  % Insert the text and formatting.
  \insertfront{\@dedication %
-  }{\@dedicationstyle}{Dedication}{\@dedication@width}
+  }{\@dedicationstyle}{DEDICATION}{\@dedication@width}
 }
 
 
@@ -496,7 +502,8 @@
 % Command that holds the value text of the acknowledgments
 \newcommand{\@acknowledgments}{}
 % Command that sets the acknowledgments style
-\newcommand{\@acknowledgmentsstyle}{\@frontpagestyle}
+% Jeremy Castagno 07/27/21 - Rackham says front matter (ack, ded, preface) must have not have italics, setting to bold non-italics sytle (4)
+\newcommand{\@acknowledgmentsstyle}{4} % Jeremy Castagno 6/22/21. Make acknowledgement the new style of "4". Bold, Center (no italics). See Line 433.
 % Command that sets the width of the acknowledgments text area
 \newcommand{\@acknowledgments@width}{1}
 
@@ -527,7 +534,7 @@
  \phantomsection\addcontentsline{toc}{chapter}{Acknowledgments}
  % Insert the text and formatting.
  \insertfront{\@acknowledgments %
-  }{\@acknowledgmentsstyle}{Acknowledgments}{\@acknowledgments@width}
+  }{\@acknowledgmentsstyle}{ACKNOWLEDGMENTS}{\@acknowledgments@width}
 }
 
 
@@ -535,7 +542,8 @@
 % Command that holds the value text of the preface
 \newcommand{\@preface}{}
 % Command that sets the preface style
-\newcommand{\@prefacestyle}{\@frontpagestyle}
+% Jeremy Castagno 07/27/21 - Rackham says front matter (ack, ded, preface) must have not have italics, setting to bold non-italics sytle (4)
+\newcommand{\@prefacestyle}{4}
 % Command that sets the width of the preface text area
 \newcommand{\@preface@width}{1}
 
@@ -566,7 +574,7 @@
  \phantomsection\addcontentsline{toc}{chapter}{Preface}
  % Insert the text and formatting.
  \insertfront{\@preface %
-  }{\@prefacestyle}{Preface}{\@preface@width}
+  }{\@prefacestyle}{PREFACE}{\@preface@width}
 }
 
 
@@ -777,6 +785,37 @@
 }
 
 
+%% ---- LIST OF ALGORITHMS ------------------------------------------------
+% This sets the formatting for the various entry types.
+\newcommand*{\l@algorithm}{\@dottedtocline{1}{0em}{2.5em}}
+
+% This sets the formatting of the list of figures page.
+\newcommand*{\listofalgorithmstemp}{%
+ % Move to new page.
+ \newpage %
+ % Add this page to the table of contents.
+ \phantomsection\addcontentsline{toc}{chapter}{List of Algorithms} %
+ % Use front page styling.
+ \frntpg %
+ % Larger upper margin for first page of table (thesis only)
+ \if@umich@thesis %
+  \begin{minipage}{0.8\textwidth} \vspace{1in} \end{minipage} \\ %
+ \fi %
+ % Add the title
+ \centerline{\large\bf LIST OF ALGORITHMS}
+ % Add some space after the title.
+ \vspace{2em} %
+ \ \\
+ % Start the automatic table of contents features.
+ \noindent ALGORITHM
+ \begin{singlespace} %
+  \@starttoc{loa}\if@restonecol\twocolumn\fi %
+ \end{singlespace} %
+}
+
+
+
+
 %% ---- LIST OF MAPS ---------------------------------------------------
 % Command to generate the 'map' environment.
 \newfloat{map}{tbp}{lom}[chapter]
@@ -840,33 +879,7 @@
  \end{singlespace} %
 }
 
-%% ---- LIST OF ALGORITHMS ------------------------------------------------
-% This sets the formatting for the various entry types.
-\newcommand*{\l@algorithm}{\@dottedtocline{1}{0em}{2.5em}}
 
-% This sets the formatting of the list of figures page.
-\newcommand*{\listofalgorithmstemp}{%
- % Move to new page.
- \newpage %
- % Add this page to the table of contents.
- \phantomsection\addcontentsline{toc}{chapter}{List of Algorithms} %
- % Use front page styling.
- \frntpg %
- % Larger upper margin for first page of table (thesis only)
- \if@umich@thesis %
-  \begin{minipage}{0.8\textwidth} \vspace{1in} \end{minipage} \\ %
- \fi %
- % Add the title
- \centerline{\large\bf LIST OF ALGORITHMS}
- % Add some space after the title.
- \vspace{2em} %
- \ \\
- % Start the automatic table of contents features.
- \noindent ALGORITHM
- \begin{singlespace} %
-  \@starttoc{loa}\if@restonecol\twocolumn\fi %
- \end{singlespace} %
-}
 
 %% ---- LIST OF APPENDICES ---------------------------------------------
 % This sets the formatting for appendices in the list.
@@ -904,7 +917,8 @@
  \renewcommand*{\thechapter}{\Alph{chapter}} %
  % Start over the chapter counter.
  \setcounter{chapter}{0} %
- \setcounter{section}{0}
+ % Start over the section counter.
+ \setcounter{section}{0} %
  % Add a pdf anchor.
  \phantomsection %
  % Add the page to the table of contents.
@@ -1279,14 +1293,14 @@
  \if@umich@listoffigures\listoffigures\fi %
  % Insert the list of tables.
  \if@umich@listoftables\listoftables\fi %
+  % Insert the list of algorithms.
+ \if@umich@listofalgorithms\listofalgorithmstemp\fi %
  % Insert the list of maps.
  \if@umich@listofmaps\listofmaps\fi %
  % Insert the list of illustrations.
  \if@umich@listofillustrations\listofillustrations\fi %
  % Insert the list of appendices.
  \if@umich@listofappendices\listofappendices\fi %
- % Insert the list of algorithms.
-\if@umich@listofalgorithms\listofalgorithmstemp\fi %
  % Insert the list of abbreviations.
  \if@umich@listofabbrevs\listofabbreviations\fi %
  % Insert the list of acronyms.

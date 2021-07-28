@@ -10,3 +10,8 @@
 *.swp
 *.synctex.gz
 *.toc
+*.lal
+*.fls
+*.lap
+*.loap
+*.fdb*
